@@ -30,7 +30,7 @@ namespace pine
 
         template<typename T, class EventType>
         auto subscribe(T* instance, void (T::* memberFunction)(EventType*)) {
-            auto* handlers = m_subscribers.at(typeid(EventType));
+            HandlerList* handlers = m_subscribers[typeid(EventType)];
 
             if (handlers == nullptr) {
                 handlers = new HandlerList();

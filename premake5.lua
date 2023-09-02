@@ -20,5 +20,5 @@ workspace "Pine"
     group ""
 
     group "Examples"
-        -- include "examples"
+        include "examples"
     group ""

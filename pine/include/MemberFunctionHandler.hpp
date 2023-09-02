@@ -26,7 +26,7 @@ namespace pine
 
         auto call(Event* t_event) -> void override
         {
-            (instance->*t_memberFunction)(static_cast<EventType*>(t_event));
+            (m_instance->*m_memberFunction)(static_cast<EventType*>(t_event));
         }
 
     private:
