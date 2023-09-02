@@ -1,6 +1,7 @@
 #pragma once
 #include "MemberFunctionHandler.hpp"
 
+#include <stdexcept>
 #include <map>
 #include <list>
 #include <typeindex>
@@ -38,6 +39,17 @@ namespace pine
             }
 
             handlers->push_back(new MemberFunctionHandler<T, EventType>(instance, memberFunction));
+        }
+
+        template<typename EventType>
+        auto append(EventType* t_event) -> void
+        {
+            throw std::runtime_error("Not implemented");
+        }
+
+        auto dispatch() -> void
+        {
+            throw std::runtime_error("Not implemented");
         }
 
     private:
