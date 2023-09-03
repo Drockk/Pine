@@ -5,6 +5,7 @@
 #include <map>
 #include <list>
 #include <typeindex>
+#include <queue>
 
 namespace pine
 {
@@ -44,15 +45,35 @@ namespace pine
         template<typename EventType>
         auto append(EventType* t_event) -> void
         {
-            throw std::runtime_error("Not implemented");
+            m_QueuedEvents.emplace(typeid(EventType), static_cast<Event*>(t_event));
         }
 
         auto dispatch() -> void
         {
-            throw std::runtime_error("Not implemented");
+            if (m_QueuedEvents.empty()) {
+                return;
+            }
+
+            while (!m_QueuedEvents.empty()) {
+                auto [typeId, event] = m_QueuedEvents.front();
+                auto* handlers = m_subscribers.at(typeId);
+
+                if (handlers == nullptr) {
+                    return;
+                }
+
+                for (auto& handler : *handlers) {
+                    if (handler != nullptr) {
+                        handler->execute(event);
+                    }
+                }
+
+                m_QueuedEvents.pop();
+            }
         }
 
     private:
         std::map<std::type_index, HandlerList*> m_subscribers;
+        std::queue<std::pair<std::type_index, Event*>> m_QueuedEvents;
     };
 }
