@@ -14,3 +14,4 @@ add_subdirectory(pine)
 
 # Examples
 add_subdirectory(examples/immediately)
+add_subdirectory(examples/deferred)
