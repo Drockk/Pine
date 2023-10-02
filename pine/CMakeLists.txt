@@ -1,4 +1,4 @@
-project (Pine CXX)
+project (Pine)
 
 add_library(
         Pine
