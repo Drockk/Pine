@@ -31,10 +31,16 @@
 *.out
 *.app
 
-#Visual Studio
+# Visual Studio
 .vs/
 *.sln
 *.vcxproj*
 
-#Build directory
+# CLion
+.idea/
+
+# CMake
+cmake-*
+
+# Build directory
 bin/

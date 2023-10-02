@@ -1,4 +1,8 @@
-#include "Pine.hpp"
+//
+// Created by Bartosz Zielonka 02.10.2023.
+//
+
+#include <pine/Pine.hpp>
 
 #include <format>
 #include <iostream>
@@ -7,16 +11,17 @@
 class Message: public pine::Event
 {
 public:
-    Message(const std::string& t_message) : m_message{ t_message } {
-
-    }
-
-    auto getMessage() -> std::string
+    explicit Message(std::string_view t_message): m_message{ t_message }
     {
-        return m_message;
+
     }
 
     ~Message() override = default;
+
+    std::string getMessage()
+    {
+        return m_message;
+    }
 
 private:
     std::string m_message{};
@@ -25,17 +30,17 @@ private:
 class Test
 {
 public:
-    auto init() -> void
+    void init()
     {
         m_eventBus.subscribe(this, &Test::onMessage);
     }
 
-    auto sendMessage(const std::string t_message) -> void
+    void sendMessage(std::string_view t_message)
     {
         m_eventBus.publish(new Message(t_message));
     }
 
-    auto onMessage(Message* t_message) -> void
+    void onMessage(Message* t_message)
     {
         std::cout << t_message->getMessage();
         delete t_message;
@@ -45,7 +50,7 @@ private:
     pine::EventBus m_eventBus;
 };
 
-auto main() -> int
+int main()
 {
     Test test;
     test.init();

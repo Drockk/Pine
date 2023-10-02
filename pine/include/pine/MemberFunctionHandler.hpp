@@ -1,4 +1,10 @@
-#pragma once
+//
+// Created by Bartosz Zielonka on 02.10.2023.
+//
+
+#ifndef PINE_MEMBERFUNCTIONHANDLER_HPP
+#define PINE_MEMBERFUNCTIONHANDLER_HPP
+
 #include "Event.hpp"
 
 namespace pine
@@ -6,11 +12,13 @@ namespace pine
     class FunctionHandlerBase
     {
     public:
-        auto execute(Event* t_event) -> void {
+        void execute(Event* t_event)
+        {
             call(t_event);
         }
+
     private:
-        virtual auto call(Event* t_event) -> void = 0;
+        virtual void call(Event* t_event) = 0;
     };
 
     template<class T, class EventType>
@@ -21,10 +29,9 @@ namespace pine
 
         MemberFunctionHandler(T* t_instance, MemberFunction t_memberFunction) : m_instance{ t_instance }, m_memberFunction{ t_memberFunction }
         {
-
         }
 
-        auto call(Event* t_event) -> void override
+        void call(Event* t_event) override
         {
             (m_instance->*m_memberFunction)(static_cast<EventType*>(t_event));
         }
@@ -34,3 +41,5 @@ namespace pine
         MemberFunction m_memberFunction;
     };
 }
+
+#endif //PINE_MEMBERFUNCTIONHANDLER_HPP
